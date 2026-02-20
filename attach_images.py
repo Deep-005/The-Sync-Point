@@ -3,9 +3,8 @@ import os
 import sys
 import django
 
-# Set up Django environment
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blogs.settings')  
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blogs.settings')
 django.setup()
 
 from app.models import BlogPost
@@ -13,12 +12,12 @@ from django.core.files import File
 from django.conf import settings
 
 def attach_images_to_blogs():
-    """Attach local images to blog posts that don't have images"""
+    """Attach images from static/dummy_blog_images/ to blog posts"""
     
     print("🔍 Scanning for blogs without images...")
     
-    # Get all blogs (or filter for ones without images)
-    blogs = BlogPost.objects.filter(image='')  # Only blogs with no image
+    # Get blogs without images
+    blogs = BlogPost.objects.filter(image='')
     
     if not blogs.exists():
         # Try alternative filter
@@ -36,6 +35,15 @@ def attach_images_to_blogs():
         print("✨ All blogs already have images!")
         return
     
+    # CORRECT PATH: Your images are in static/dummy_blog_images/
+    images_path = os.path.join(settings.BASE_DIR, 'static', 'dummy_blogs_images')
+    print(f"📁 Looking for images in: {images_path}")
+    
+    if not os.path.exists(images_path):
+        print(f"❌ ERROR: Images folder not found at {images_path}")
+        print("Please make sure your images are in static/dummy_blogs_images/")
+        return
+    
     # Map categories to filename patterns
     category_map = {
         'Business': 'business',
@@ -49,15 +57,6 @@ def attach_images_to_blogs():
         'Entertainment': 'ent',
     }
     
-    # Path to your images
-    images_path = os.path.join(settings.BASE_DIR, 'media', 'blog_images')
-    print(f"📁 Looking for images in: {images_path}")
-    
-    if not os.path.exists(images_path):
-        print(f"❌ ERROR: Images folder not found at {images_path}")
-        print("Please make sure your images are in media/blog_images/")
-        return
-    
     success_count = 0
     failed_count = 0
     
@@ -67,7 +66,6 @@ def attach_images_to_blogs():
         
         print(f"\n🔄 Processing: {blog.title} (ID: {blog.id}, Category: {category})")
         
-        # Try images 1-5 for this category
         image_attached = False
         for i in range(1, 6):
             # Try different extensions
@@ -78,7 +76,6 @@ def attach_images_to_blogs():
                 if os.path.exists(image_path):
                     try:
                         with open(image_path, 'rb') as f:
-                            # Create a unique filename for the blog
                             new_filename = f"{category.lower()}_{blog.id}_{image_filename}"
                             blog.image.save(new_filename, File(f), save=True)
                             print(f"  ✅ Attached: {image_filename}")
@@ -88,7 +85,7 @@ def attach_images_to_blogs():
                     except Exception as e:
                         print(f"  ❌ Error attaching {image_filename}: {e}")
                         failed_count += 1
-                    
+            
             if image_attached:
                 break
         
