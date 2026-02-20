@@ -34,4 +34,8 @@ python manage.py migrate
 echo "📝 Creating dummy blogs..."
 python manage.py add_dummy_blogs --noinput
 
+# After creating dummy blogs
+echo "📸 Attaching images to blogs..."
+python attach_images.py
+
 echo "✅ Build complete!"
