@@ -51,7 +51,7 @@ myvenv/
 /media/blog_images/
 
 staticfiles/
-!static/default_blog_images/
+!static/default_blogs_images/
 
 # Environment variables
 .env
