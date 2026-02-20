@@ -1,0 +1,803 @@
+/* ========== BLOG COMMON STYLES ========== */
+/* Shared across write, edit, and preview blog pages */
+
+/* Blog Page Container */
+.blog-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+/* Blog Page Header */
+.blog-page-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.blog-page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 10px;
+}
+
+.page-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 20px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* Status Badge */
+.status-indicator {
+  display: inline-flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-draft {
+  background: linear-gradient(135deg, #ffd166, #ffb347);
+  color: #fff;
+}
+
+.status-published {
+  background: linear-gradient(135deg, #06d6a0, #06a680);
+  color: #fff;
+}
+
+.status-archived {
+  background: linear-gradient(135deg, #6c757d, #495057);
+  color: #fff;
+}
+
+/* Messages */
+.messages {
+  margin-bottom: 25px;
+}
+
+.alert {
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border-left: 4px solid;
+}
+
+.alert-success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-left-color: #4caf50;
+}
+
+.alert-error {
+  background: #ffebee;
+  color: #c62828;
+  border-left-color: #f44336;
+}
+
+.alert-warning {
+  background: #fff3cd;
+  color: #856404;
+  border-left-color: #ffc107;
+}
+
+.alert-info {
+  background: #d1ecf1;
+  color: #0c5460;
+  border-left-color: #17a2b8;
+}
+
+/* Blog Content Card */
+.blog-content-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+  margin-bottom: 60px;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.required {
+  color: #ff7e5f;
+  margin-left: 4px;
+}
+
+/* Input Fields */
+.form-group input[type="text"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  background: #fcfcfc;
+}
+
+.form-group input[type="text"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #ff7e5f;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 126, 95, 0.1);
+  background: white;
+}
+
+.form-group select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+  padding-right: 45px;
+  cursor: pointer;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 300px;
+  line-height: 1.6;
+}
+
+/* Character Counter */
+.char-counter {
+  text-align: right;
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+.char-counter.limit {
+  color: #ff7e5f;
+  font-weight: 600;
+}
+
+/* Image Upload Section */
+.image-upload-section {
+  border: 2px dashed #e0e0e0;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f9fafb;
+}
+
+.image-upload-section:hover {
+  border-color: #ff7e5f;
+  background: #fff5f0;
+}
+
+.image-upload-section i {
+  font-size: 48px;
+  color: #ff7e5f;
+  margin-bottom: 15px;
+}
+
+.image-upload-section p {
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.file-info {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.image-upload-section input[type="file"] {
+  display: none;
+}
+
+/* Image Preview */
+.image-preview {
+  margin-top: 20px;
+  display: none;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 15px;
+  background: #f9fafb;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 15px;
+  border: 2px solid white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.preview-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.preview-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-btn:first-child {
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #e0e0e0;
+}
+
+.preview-btn:first-child:hover {
+  background: #e9ecef;
+}
+
+.preview-btn:last-child {
+  background: #f8f9fa;
+  color: #dc3545;
+  border: 1px solid #f0f0f0;
+}
+
+.preview-btn:last-child:hover {
+  background: #dc3545;
+  color: white;
+}
+
+/* Content Editor */
+.content-editor {
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.editor-tools {
+  display: flex;
+  gap: 5px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  flex-wrap: wrap;
+}
+
+.tool-btn {
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: white;
+  color: #333;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tool-btn:hover {
+  background: #ff7e5f;
+  color: white;
+  border-color: #ff7e5f;
+}
+
+.tool-btn i {
+  font-size: 0.9rem;
+}
+
+.content-editor textarea {
+  border: none;
+  border-radius: 0;
+  min-height: 400px;
+  padding: 20px;
+}
+
+.content-editor textarea:focus {
+  box-shadow: none;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #f0f0f0;
+  flex-wrap: wrap;
+}
+
+/* Action Buttons Base Styles */
+.publish-btn, .draft-btn, .update-btn, .cancel-btn, 
+.preview-btn, .edit-action-btn, .back-action-btn,
+.publish-bottom-btn, .edit-bottom-btn, .archive-bottom-btn,
+.delete-bottom-btn {
+  padding: 14px 30px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 160px;
+}
+
+/* Image Size Alert Card */
+.image-alert-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.alert-card-content {
+  background: white;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+  padding: 40px 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert-icon {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.alert-icon i {
+  font-size: 70px;
+  color: #ff7e5f;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.alert-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.alert-message {
+  font-size: 1.1rem;
+  color: #555;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  padding: 0 10px;
+}
+
+.alert-message strong {
+  color: #ff7e5f;
+  font-weight: 700;
+}
+
+.alert-suggestions {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 1px solid #eee;
+}
+
+.alert-suggestions h4 {
+  font-size: 1.1rem;
+  color: #1a1a2e;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.alert-suggestions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alert-suggestions li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.alert-suggestions li i {
+  color: #28a745;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.got-it-btn {
+  width: 100%;
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(255, 126, 95, 0.3);
+}
+
+.got-it-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 126, 95, 0.4);
+}
+
+/* Delete Confirmation Card */
+.confirm-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.delete-card-content,
+.publish-card-content,
+.update-card-content {
+  background: white;
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+  padding: 40px 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: slideUp 0.4s ease;
+}
+
+.delete-icon,
+.publish-icon,
+.update-icon {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.delete-icon i {
+  font-size: 70px;
+  color: #dc3545;
+  animation: pulse 2s infinite;
+}
+
+.delete-title,
+.publish-title,
+.update-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.delete-message,
+.publish-message,
+.update-message {
+  font-size: 1.1rem;
+  color: #555;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  padding: 0 10px;
+}
+
+.delete-message strong {
+  color: #dc3545;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.delete-warning {
+  background: #fff3f3;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 1px solid #ffcdcd;
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.delete-warning i {
+  color: #dc3545;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.delete-warning p {
+  color: #721c24;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.delete-actions,
+.publish-actions,
+.update-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.cancel-delete-btn,
+.confirm-delete-btn,
+.cancel-publish-btn,
+.confirm-publish-btn,
+.cancel-update-btn,
+.confirm-update-btn {
+  flex: 1;
+  padding: 15px 20px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.cancel-delete-btn,
+.cancel-publish-btn,
+.cancel-update-btn {
+  background: #f8f9fa;
+  color: #6c757d;
+  border: 2px solid #e9ecef;
+}
+
+.cancel-delete-btn:hover,
+.cancel-publish-btn:hover,
+.cancel-update-btn:hover {
+  background: #e9ecef;
+  transform: translateY(-2px);
+}
+
+.confirm-delete-btn {
+  background: #dc3545;
+  color: white;
+  box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+}
+
+.confirm-delete-btn:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+}
+
+/* Responsive Design - Common */
+@media (max-width: 768px) {
+  .blog-page-header h1 {
+    font-size: 2rem;
+  }
+  
+  .page-subtitle {
+    font-size: 1rem;
+  }
+  
+  .blog-content-card {
+    padding: 25px;
+  }
+  
+  .editor-tools {
+    flex-direction: column;
+  }
+  
+  .tool-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions button,
+  .form-actions a {
+    width: 100%;
+  }
+  
+  .alert-card-content,
+  .delete-card-content,
+  .publish-card-content,
+  .update-card-content {
+    padding: 30px 20px;
+  }
+  
+  .alert-icon i,
+  .delete-icon i,
+  .publish-icon i,
+  .update-icon i {
+    font-size: 60px;
+  }
+  
+  .alert-title,
+  .delete-title,
+  .publish-title,
+  .update-title {
+    font-size: 1.8rem;
+  }
+  
+  .alert-message,
+  .delete-message,
+  .publish-message,
+  .update-message {
+    font-size: 1rem;
+  }
+  
+  .alert-suggestions,
+  .delete-warning,
+  .publish-info,
+  .update-info {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-page-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .blog-content-card {
+    padding: 20px;
+  }
+  
+  .form-group input[type="text"],
+  .form-group select,
+  .form-group textarea {
+    padding: 10px 12px;
+  }
+  
+  .image-upload-section {
+    padding: 25px;
+  }
+  
+  .image-upload-section i {
+    font-size: 40px;
+  }
+  
+  .preview-actions {
+    flex-direction: column;
+  }
+  
+  .preview-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .alert-card-content,
+  .delete-card-content,
+  .publish-card-content,
+  .update-card-content {
+    padding: 25px 15px;
+  }
+  
+  .alert-icon i,
+  .delete-icon i,
+  .publish-icon i,
+  .update-icon i {
+    font-size: 50px;
+  }
+  
+  .alert-title,
+  .delete-title,
+  .publish-title,
+  .update-title {
+    font-size: 1.5rem;
+  }
+  
+  .alert-message,
+  .delete-message,
+  .publish-message,
+  .update-message {
+    font-size: 0.95rem;
+  }
+  
+  .delete-warning {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .delete-actions,
+  .publish-actions,
+  .update-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+  
+  .cancel-delete-btn,
+  .confirm-delete-btn,
+  .cancel-publish-btn,
+  .confirm-publish-btn,
+  .cancel-update-btn,
+  .confirm-update-btn {
+    width: 100%;
+  }
+}

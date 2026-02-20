@@ -1,0 +1,147 @@
+{% extends '../page_base.html' %}
+{% load static %}
+
+{% block title %}Blog- {{ blog.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/blog_detail.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="blog-detail-container">
+    
+    <!-- Blog Header -->
+    <section class="blog-header">
+        <div class="blog-category">{{ blog.get_content_type_display }}</div>
+        <h1 class="blog-title">{{ blog.title }}</h1>
+        
+        <div class="blog-meta">
+            <div class="blog-author">
+                <i class="fas fa-user"></i>
+                <span>{{ blog.author }}</span>
+            </div>
+            <div class="blog-date">
+                <i class="fas fa-calendar"></i>
+                <span>{{ blog.created_at|date:"F d, Y" }}</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Featured Image -->
+    <section class="blog-featured-image">
+        <img src="{% if blog.image %}{{ blog.image.url }}{% endif %}" 
+             alt="{{ blog.title }}">
+    </section>
+
+    <!-- Blog Stats -->
+    <section class="blog-stats">
+        <div class="stat-item">
+            <div class="stat-icon">
+                <i class="fas fa-eye"></i>
+            </div>
+            <div class="stat-count">{{ blog.views_formatted }}</div>
+            <div class="stat-label">Views</div>
+        </div>
+        
+        <div class="like-dislike-buttons">
+            <!-- Like Form -->
+            <form method="POST" action="" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" name="like" class="like-btn">
+                    <i class="fas fa-thumbs-up"></i> {{ blog.likes_formatted }}
+                </button>
+            </form>
+            
+            <!-- Dislike Form -->
+            <form method="POST" action="" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" name="dislike" class="dislike-btn">
+                    <i class="fas fa-thumbs-down"></i> {{ blog.dislikes_formatted }}
+                </button>
+            </form>
+        </div>
+        
+        <div class="stat-item">
+            <div class="stat-icon">
+                <i class="fas fa-comment"></i>
+            </div>
+            <div class="stat-count">{{ total_comments }}</div>
+            <div class="stat-label">Comments</div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <article class="blog-content">
+        {{ blog.content|linebreaks }}
+    </article>
+
+    <!-- Comments Section -->
+    <section class="comments-section">
+        <div class="comments-header">
+            <h2 class="comments-title">Comments</h2>
+            <span class="comments-count">{{ total_comments }} comment{{ total_comments|pluralize }}</span>
+        </div>
+
+        <!-- Comments List -->
+        <div class="comments-list">
+            {% if comments %}
+                {% for comment in comments %}
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <div class="comment-author">
+                            <div class="author-avatar">
+                                {{ comment.author_name|first|upper }}
+                            </div>
+                            <div class="author-info">
+                                <h4>{{ comment.author_name }}</h4>
+                                <div class="comment-date">{{ comment.formatted_date }} at {{ comment.formatted_time }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-text">
+                        {{ comment.comment_text|linebreaks }}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-comments">
+                    <p>No comments yet. Be the first to share your thoughts!</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Comment Form -->
+        <div class="comment-form-section">
+            <h3 class="form-title">Leave a Comment</h3>
+            <form method="POST" action="">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_author_name">Your Name *</label>
+                    <input type="text" name="author_name" id="id_author_name" 
+                           class="form-control" required 
+                           placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_author_email">Your Email (optional)</label>
+                    <input type="email" name="author_email" id="id_author_email" 
+                           class="form-control" 
+                           placeholder="Enter your email (optional)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_comment_text">Your Comment *</label>
+                    <textarea name="comment_text" id="id_comment_text" 
+                              class="form-control" required rows="5"
+                              placeholder="Write your comment here..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Post Comment
+                </button>
+            </form>
+        </div>
+    </section>
+</div>
+{% endblock %}

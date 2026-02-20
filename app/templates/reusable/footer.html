@@ -1,0 +1,133 @@
+{% load static %}
+
+<!-- Page-specific CSS block -->
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reusable/footer.css' %}">
+{% endblock %}
+
+<footer>
+    <div class="container">
+        <div class="col-1">
+            <div class="logo-area">
+                <div class="color-id">SP</div>
+                <div class="brand-name">
+                    <h2>The Sync Point</h2>
+                    <p>Connecting the dots through knowledge</p>
+                </div>
+            </div>
+            <p class="description">A platform for sharing insights, ideas, and knowledge across various domains. Join our community of readers and contributors who believe in the power of shared wisdom.</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <i class="fas fa-newspaper"></i>
+                    <span>500+ Articles</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-users"></i>
+                    <span>10K+ Readers</span>
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-pen-fancy"></i>
+                    <span>50+ Contributors</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-2">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About Us</a></li>
+                <li><a href="{% url 'blogs' %}">Blogs</a></li>
+                <li>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'contact' %}">Contact</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" 
+                        class="contact-login"
+                        title="Login to contact us">
+                            Contact
+                        </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+        
+        <div class="col-3">
+            <h3>Popular Categories</h3>
+            <ul>
+                <li><a href="{% url 'blogs' %}?category=Technology">Technology</a></li>
+                <li><a href="{% url 'blogs' %}?category=Creative">Creative</a></li>
+                <li><a href="{% url 'blogs' %}?category=Business">Business</a></li>
+                <li><a href="{% url 'blogs' %}?category=Health">Health</a></li>
+                <li><a href="{% url 'blogs' %}?category=Food">Food</a></li>
+                <li><a href="{% url 'blogs' %}?category=Sports">Sports</a></li>
+            </ul>
+        </div>
+        
+        <div class="col-4">
+            <h3>Connect With Us</h3>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <span class="label">Email</span>
+                        <a href="mailto:contact@thesyncpoint.com" class="contact-link">contact@thesyncpoint.com</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <span class="label">Phone</span>
+                        <a href="tel:+919876543210" class="contact-link">+91 98765 43210</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <span class="label">Address</span>
+                        <span class="address">123 Knowledge Street,<br>Tech City, IN 560001</span>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="{% url 'contact' %}" class="contact-btn">
+                <i class="fas fa-paper-plane"></i> Send Message
+            </a>
+            
+            <div class="social-icons">
+                <a href="#" class="social-icon" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-icon" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-icon" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="#" class="social-icon" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <div class="footer-bottom-content">
+            <p class="copyright">© 2025 The Sync Point. All rights reserved. | Designed with <i class="fas fa-heart"></i> by <strong>Deepak Negi</strong></p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <span class="separator">|</span>
+                <a href="#">Terms of Service</a>
+                <span class="separator">|</span>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+        <button id="scrollToTopBtn" class="scroll-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+</footer>
+

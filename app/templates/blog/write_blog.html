@@ -1,0 +1,126 @@
+{% extends '../blog_base.html' %}
+{% load static %}
+
+{% block blog_title %}Write New Blog{% endblock %}
+{% block page_heading %}Write a New Blog{% endblock %}
+{% block page_subtitle %}Share your thoughts, ideas, and experiences with the world{% endblock %}
+
+{% block blog_css %}
+<link rel="stylesheet" href="{% static 'css/blog/write_blog.css' %}">
+{% endblock %}
+
+{% block blog_content %}
+<form method="POST" action="{% url 'write_blog' %}" class="write-blog-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <!-- Blog Title -->
+    <div class="form-group">
+        <label for="title">Blog Title <span class="required">*</span></label>
+        <input type="text" 
+               id="title" 
+               name="title" 
+               required
+               placeholder="Enter a compelling title for your blog"
+               maxlength="200">
+        <div class="char-counter">
+            <span id="title-counter">0</span>/200 characters
+        </div>
+    </div>
+
+    <!-- Blog Category -->
+    <div class="form-group">
+        <label for="content_type">Category <span class="required">*</span></label>
+        <select id="content_type" name="content_type" required>
+            <option value="" disabled selected>Select a category</option>
+            <option value="Business">Business</option>
+            <option value="Travel">Travel</option>
+            <option value="Sports">Sports</option>
+            <option value="Food">Food</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Technology">Technology</option>
+            <option value="Creative">Creative</option>
+            <option value="Health">Health</option>
+            <option value="Entertainment">Entertainment</option>
+        </select>
+    </div>
+
+    <!-- Featured Image -->
+    <div class="form-group">
+        <label>Featured Image <span class="required">*</span></label>
+        <div class="image-upload-section" onclick="document.getElementById('image').click()">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>Click to upload featured image</p>
+            <p class="file-info">Recommended: 1200x630px, Max 5MB</p>
+            <input type="file" 
+                   id="image" 
+                   name="image" 
+                   accept="image/*" 
+                   required
+                   onchange="previewImage(this)">
+        </div>
+        <div class="image-preview" id="image-preview">
+            <img id="preview-img" src="#" alt="Preview">
+            <div class="preview-actions">
+                <button type="button" class="preview-btn" onclick="changeImage()">
+                    <i class="fas fa-sync-alt"></i> Change
+                </button>
+                <button type="button" class="preview-btn" onclick="removeImage()">
+                    <i class="fas fa-trash"></i> Remove
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Content -->
+    <div class="form-group">
+        <label for="content">Blog Content <span class="required">*</span></label>
+        <div class="content-editor">
+            <!-- Simple Editor Tools -->
+            <div class="editor-tools">
+                <button type="button" class="tool-btn" onclick="formatText('bold')">
+                    <i class="fas fa-bold"></i> Bold
+                </button>
+                <button type="button" class="tool-btn" onclick="formatText('italic')">
+                    <i class="fas fa-italic"></i> Italic
+                </button>
+                <button type="button" class="tool-btn" onclick="insertHeading()">
+                    <i class="fas fa-heading"></i> Heading
+                </button>
+                <button type="button" class="tool-btn" onclick="insertLink()">
+                    <i class="fas fa-link"></i> Link
+                </button>
+                <button type="button" class="tool-btn" onclick="insertList('ul')">
+                    <i class="fas fa-list-ul"></i> List
+                </button>
+            </div>
+            
+            <textarea id="content" 
+                      name="content" 
+                      required
+                      placeholder="Start writing your amazing content here..."
+                      oninput="updateCharCount()"></textarea>
+            
+            <div class="char-counter" id="content-counter">
+                <span id="char-count">0</span>/5000 characters
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+        <button type="submit" class="publish-btn" name="action" value="publish">
+            <i class="fas fa-paper-plane"></i> Publish Blog
+        </button>
+        <button type="submit" class="draft-btn" name="action" value="draft">
+            <i class="fas fa-save"></i> Save as Draft
+        </button>
+        <a href="{% url 'profile' %}" class="cancel-btn">
+            Cancel
+        </a>
+    </div>
+</form>
+{% endblock %}
+
+{% block blog_js %}
+<script src="{% static 'js/write_blog.js' %}"></script>
+{% endblock %}

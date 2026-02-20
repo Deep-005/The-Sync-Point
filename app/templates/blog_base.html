@@ -1,0 +1,57 @@
+{% extends 'page_base.html' %}
+{% load static %}
+
+{% block title %}{% block blog_title %}{% endblock %} - The Sync Point{% endblock %}
+
+{% block extra_css %}
+<!-- Blog Common CSS -->
+<link rel="stylesheet" href="{% static 'css/blog/blog_common.css' %}">
+{% block blog_css %}{% endblock %}
+{% endblock %}
+
+{% block main %}
+<div class="blog-page-container">
+    <!-- Header -->
+    <div class="blog-page-header">
+        <h1>{% block page_heading %}{% endblock %}</h1>
+        <p class="page-subtitle">{% block page_subtitle %}{% endblock %}</p>
+    </div>
+
+    <!-- Main Content Card -->
+    <div class="blog-content-card">
+        {% block blog_content %}{% endblock %}
+    </div>
+
+    <!-- Image Size Alert Card (Common to all blog pages) -->
+    <div id="imageSizeAlert" class="image-alert-card" style="display: none;">
+        <div class="alert-card-content">
+            <div class="alert-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h3 class="alert-title">Image Too Large</h3>
+            <p class="alert-message">
+                The image you uploaded exceeds the <strong>5MB size limit</strong>. 
+                Please optimize your image or choose a smaller file.
+            </p>
+            <div class="alert-suggestions">
+                <h4>Quick Tips:</h4>
+                <ul>
+                    <li><i class="fas fa-check"></i> Use image compression tools like TinyPNG</li>
+                    <li><i class="fas fa-check"></i> Resize to 1200x630px recommended dimensions</li>
+                    <li><i class="fas fa-check"></i> Convert to JPEG for smaller file size</li>
+                    <li><i class="fas fa-check"></i> Screenshots should be saved as PNG</li>
+                </ul>
+            </div>
+            <button class="got-it-btn" onclick="hideImageAlert()">
+                <i class="fas fa-thumbs-up"></i> Got It
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Common Blog JavaScript -->
+<script src="{% static 'js/blog/blog_common.js' %}"></script>
+{% block blog_js %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,346 @@
+/* Preview Blog Page Specific Styles */
+
+/* Preview Container */
+.preview-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+/* Preview Actions Specific to Preview Page */
+.preview-actions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.edit-action-btn {
+  background: #1a1a2e;
+  color: white;
+  border: 2px solid #1a1a2e;
+}
+
+.edit-action-btn:hover {
+  background: #16213e;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(26, 26, 46, 0.3);
+}
+
+.back-action-btn {
+  background: #f8f9fa;
+  color: #495057;
+  border: 2px solid #e9ecef;
+}
+
+.back-action-btn:hover {
+  background: #e9ecef;
+  transform: translateY(-3px);
+}
+
+/* Blog Preview Card Specific */
+.blog-preview-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid #eee;
+  margin-bottom: 40px;
+}
+
+/* Preview Category */
+.preview-category {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.preview-category i {
+  margin-right: 8px;
+}
+
+/* Preview Title */
+.preview-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin: 20px 0;
+  line-height: 1.3;
+}
+
+/* Preview Meta */
+.preview-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  margin: 20px 0;
+}
+
+.author-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f8f9fa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.reading-time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #666;
+  background: #f8f9fa;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+
+.reading-time i {
+  color: #ff7e5f;
+}
+
+/* Featured Image */
+.preview-featured-image {
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 30px 0;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.preview-featured-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.preview-featured-image:hover img {
+  transform: scale(1.05);
+}
+
+/* Preview Content */
+.preview-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #333;
+  padding: 30px 0;
+}
+
+.preview-content h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 30px 0 15px;
+}
+
+.preview-content h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin: 25px 0 10px;
+}
+
+/* Preview Stats */
+.preview-stats {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  color: #666;
+  background: #f8f9fa;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.stat-item i {
+  color: #ff7e5f;
+  font-size: 1.1rem;
+}
+
+/* Bottom Actions */
+.bottom-actions {
+  display: flex;
+  gap: 20px;
+  padding: 30px;
+  background: #f9fafb;
+  border-radius: 16px;
+  border: 1px solid #eee;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-group {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.publish-bottom-btn {
+  background: linear-gradient(135deg, #06d6a0, #06a680);
+  color: white;
+}
+
+.publish-bottom-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(6, 214, 160, 0.4);
+}
+
+.delete-bottom-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.delete-bottom-btn:hover {
+  background: #c82333;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(220, 53, 69, 0.3);
+}
+
+/* Publish Card Specific */
+.publish-icon i {
+  background: linear-gradient(135deg, #06d6a0, #06a680);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.publish-message strong {
+  background: linear-gradient(135deg, #06d6a0, #06a680);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.publish-info {
+  background: #f0f9f6;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 1px solid #b3e6d9;
+}
+
+.publish-info .info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+  color: #0a5c4a;
+  font-size: 0.95rem;
+}
+
+.publish-info .info-row i {
+  color: #06d6a0;
+}
+
+.confirm-publish-btn {
+  background: linear-gradient(135deg, #06d6a0, #06a680);
+  color: white;
+  box-shadow: 0 5px 15px rgba(6, 214, 160, 0.3);
+}
+
+.confirm-publish-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(6, 214, 160, 0.4);
+}
+
+/* Responsive for preview page */
+@media (max-width: 992px) {
+  .preview-title {
+    font-size: 2.2rem;
+  }
+  
+  .preview-featured-image {
+    height: 400px;
+  }
+  
+  .preview-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .publish-action-btn,
+  .edit-action-btn,
+  .back-action-btn {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .preview-title {
+    font-size: 1.8rem;
+  }
+  
+  .preview-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .preview-featured-image {
+    height: 300px;
+  }
+  
+  .preview-stats {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .stat-item {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .bottom-actions {
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .action-group {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .preview-title {
+    font-size: 1.5rem;
+  }
+  
+  .preview-featured-image {
+    height: 200px;
+  }
+  
+  .author-info {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .author-details {
+    align-items: center;
+  }
+}

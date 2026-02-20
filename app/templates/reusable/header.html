@@ -1,0 +1,182 @@
+{% load static %}
+
+<!-- Page-specific CSS block -->
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/reusable/header.css' %}">
+{% endblock %}
+
+<header>
+    <!-- Top Navigation Bar -->
+    <div class="navbar">
+        <!-- Section 1: Elegant Search Box -->
+        <div class="navbar-section search-section">
+            <form class="search-box" method="GET" action="{% url 'search_results' %}">
+                {% csrf_token %}
+                <input type="search" class="search-input" name="q" placeholder="Search articles..." value="{{ request.GET.q|default:'' }}" required>
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Section 2: Logo -->
+        <div class="navbar-section logo-section">
+            <div class="logo-area">
+                <div class="color-id">SP</div>
+                <div class="brand-name">
+                    <h1>The Sync Point</h1>
+                    <p>Connecting the dots</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Navigation Links -->
+        <div class="navbar-section nav-section">
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+                <li><a href="{% url 'blogs' %}" class="{% if request.resolver_match.url_name == 'blogs' %}active{% endif %}">Blogs</a></li>
+                <li><a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
+                
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" 
+                        class="contact-login"
+                        title="Login to contact us">
+                            Contact
+                        </a>
+                    {% endif %}
+                
+                {% if user.is_authenticated %}<li>
+                    <a href="{% url 'profile' %}" title="Logged in as {{ user.username }}" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+                        <i class="fas fa-user-cog" style="font-size: 20px;" ></i>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Category Navigation (Desktop) -->
+    {% if request.path == '/' or request.path == '/home/' or request.path == '/blogs/' %}
+    <div class="categories">
+        <a href="{% url 'blogs' %}?category=Business" class="cat-btn {% if request.GET.category == 'Business' %}active{% endif %}">
+            <button class="category-btn" data-category="business">Business</button>
+        </a>
+        <a href="{% url 'blogs' %}?category=Fashion" class="cat-btn {% if request.GET.category == 'Fashion' %}active{% endif %}">
+            <button class="category-btn" data-category="fashion">Fashion</button>
+        </a>
+        <a href="{% url 'blogs' %}?category=Sports" class="cat-btn {% if request.GET.category == 'Sports' %}active{% endif %}">
+            <button class="category-btn" data-category="sports">Sports</button>
+        </a>
+        <a href="{% url 'blogs' %}?category=Health" class="cat-btn {% if request.GET.category == 'Health' %}active{% endif %}">
+            <button class="category-btn" data-category="health">Health</button>
+        </a>
+        <a href="{% url 'blogs' %}?category=Entertainment" class="cat-btn {% if request.GET.category == 'Entertainment' %}active{% endif %}">
+            <button class="category-btn" data-category="entertainment">Entertainment</button>
+        </a>
+        <a href="{% url 'blogs' %}?category=Technology" class="cat-btn {% if request.GET.category == 'Technology' %}active{% endif %}">
+            <button class="category-btn" data-category="technology">Technology</button>
+        </a>
+        <a href="{% url 'blogs' %}?category=Travel" class="cat-btn {% if request.GET.category == 'Travel' %}active{% endif %}">
+            <button class="category-btn" data-category="travel">Travel</button>
+        </a>
+        <a href="{% url 'blogs' %}?category=Food" class="cat-btn {% if request.GET.category == 'Food' %}active{% endif %}">
+            <button class="category-btn" data-category="food">Food</button>
+        </a>
+        <a href="{% url 'blogs' %}?category=Creative" class="cat-btn {% if request.GET.category == 'Creative' %}active{% endif %}">
+            <button class="category-btn" data-category="creative">Creative</button>
+        </a>
+    </div>
+    {% endif %}
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-container" id="mobileMenuContainer">
+        <div class="mobile-menu-header">
+            <div class="logo-area">
+                <div class="color-id">SP</div>
+                <div class="brand-name">
+                    <h1>The Sync Point</h1>
+                    <p>Connecting the dots</p>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" id="closeMobileMenu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Search Bar -->
+        <div class="mobile-menu-search">
+            <form class="mobile-search-box" method="GET" action="{% url 'search_results' %}">
+                {% csrf_token %}
+                <input type="search" name="q" placeholder="Search articles..." value="{{ request.GET.q|default:'' }}" required>
+                <button type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Mobile Navigation Links -->
+        <div class="mobile-nav-links">
+            <a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+            <a href="{% url 'blogs' %}" class="{% if request.resolver_match.url_name == 'blogs' %}active{% endif %}">Blogs</a>
+            <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a>
+                {% else %}
+                    <a href="{% url 'login' %}" 
+                    class="contact-login"
+                    title="Login to contact us">
+                        Contact
+                    </a>
+                {% endif %}
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}">Profile</a>
+            {% endif %}
+        </div>
+
+        <!-- Mobile Categories Grid -->
+        {% if request.path == '/' or request.path == '/home/' or request.path == '/blogs/' %}
+        <div class="mobile-categories-grid">
+            <a href="{% url 'blogs' %}?category=Business" class="cat-btn {% if request.GET.category == 'Business' %}active{% endif %}">
+                <button class="category-btn" data-category="business">Business</button>
+            </a>
+            <a href="{% url 'blogs' %}?category=Fashion" class="cat-btn {% if request.GET.category == 'Fashion' %}active{% endif %}">
+                <button class="category-btn" data-category="fashion">Fashion</button>
+            </a>
+            <a href="{% url 'blogs' %}?category=Sports" class="cat-btn {% if request.GET.category == 'Sports' %}active{% endif %}">
+                <button class="category-btn" data-category="sports">Sports</button>
+            </a>
+            <a href="{% url 'blogs' %}?category=Health" class="cat-btn {% if request.GET.category == 'Health' %}active{% endif %}">
+                <button class="category-btn" data-category="health">Health</button>
+            </a>
+            <a href="{% url 'blogs' %}?category=Entertainment" class="cat-btn {% if request.GET.category == 'Entertainment' %}active{% endif %}">
+                <button class="category-btn" data-category="entertainment">Entertainment</button>
+            </a>
+            <a href="{% url 'blogs' %}?category=Technology" class="cat-btn {% if request.GET.category == 'Technology' %}active{% endif %}">
+                <button class="category-btn" data-category="technology">Technology</button>
+            </a>
+            <a href="{% url 'blogs' %}?category=Travel" class="cat-btn {% if request.GET.category == 'Travel' %}active{% endif %}">
+                <button class="category-btn" data-category="travel">Travel</button>
+            </a>
+            <a href="{% url 'blogs' %}?category=Food" class="cat-btn {% if request.GET.category == 'Food' %}active{% endif %}">
+                <button class="category-btn" data-category="food">Food</button>
+            </a>
+            <a href="{% url 'blogs' %}?category=Creative" class="cat-btn {% if request.GET.category == 'Creative' %}active{% endif %}">
+                <button class="category-btn" data-category="creative">Creative</button>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+</header>
+
+{% block extra_js %}
+<script src="{% static 'js/header.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,222 @@
+{% extends '../blog_base.html' %}
+{% load static %}
+
+{% block blog_title %}Edit Blog{% endblock %}
+{% block page_heading %}Edit Blog Post{% endblock %}
+{% block page_subtitle %}Update your blog post and make it even better{% endblock %}
+
+{% block blog_css %}
+<link rel="stylesheet" href="{% static 'css/blog/edit_blog.css' %}">
+{% endblock %}
+
+{% block blog_content %}
+        <form method="POST" action="{% url 'edit_blog' blog.id %}" class="write-blog-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Current Image -->
+            <div class="current-image-section">
+                <span class="current-image-label">Current Featured Image</span>
+                <div class="current-image-container">
+                    <div class="current-image">
+                        {% if blog.image %}
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+                        {% else %}
+                        <img src="{% static 'images/default-blog.jpg' %}" alt="Default Blog Image">
+                        {% endif %}
+                    </div>
+                    <div class="image-info">
+                        <p>This is your current featured image.</p>
+                        <div class="keep-image">
+                            <input type="checkbox" id="keep_image" name="keep_image" checked>
+                            <label for="keep_image">Keep current image</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Title -->
+            <div class="form-group">
+                <label for="title">Blog Title <span class="required">*</span></label>
+                <input type="text" 
+                       id="title" 
+                       name="title" 
+                       value="{{ blog.title }}"
+                       required
+                       placeholder="Enter a compelling title for your blog"
+                       maxlength="200">
+                <div class="char-counter">
+                    <span id="title-counter">{{ blog.title|length }}</span>/200 characters
+                </div>
+            </div>
+
+            <!-- Blog Category -->
+            <div class="form-group">
+                <label for="content_type">Category <span class="required">*</span></label>
+                <select id="content_type" name="content_type" required>
+                    <option value="" disabled>Select a category</option>
+                    <option value="Business" {% if blog.content_type == 'Business' %}selected{% endif %}>Business</option>
+                    <option value="Travel" {% if blog.content_type == 'Travel' %}selected{% endif %}>Travel</option>
+                    <option value="Sports" {% if blog.content_type == 'Sports' %}selected{% endif %}>Sports</option>
+                    <option value="Food" {% if blog.content_type == 'Food' %}selected{% endif %}>Food</option>
+                    <option value="Fashion" {% if blog.content_type == 'Fashion' %}selected{% endif %}>Fashion</option>
+                    <option value="Technology" {% if blog.content_type == 'Technology' %}selected{% endif %}>Technology</option>
+                    <option value="Creative" {% if blog.content_type == 'Creative' %}selected{% endif %}>Creative</option>
+                    <option value="Health" {% if blog.content_type == 'Health' %}selected{% endif %}>Health</option>
+                    <option value="Entertainment" {% if blog.content_type == 'Entertainment' %}selected{% endif %}>Entertainment</option>
+                </select>
+            </div>
+
+            <!-- New Image Upload -->
+            <div class="form-group">
+                <label>Change Featured Image (Optional)</label>
+                <div class="image-upload-section" onclick="document.getElementById('new_image').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click to upload new image</p>
+                    <p class="file-info">Leave empty to keep current image</p>
+                    <input type="file" 
+                           id="new_image" 
+                           name="new_image" 
+                           accept="image/*" 
+                           onchange="previewNewImage(this)">
+                </div>
+                <div class="image-preview" id="new-image-preview">
+                    <img id="new-preview-img" src="#" alt="New Preview">
+                    <div class="preview-actions">
+                        <button type="button" class="preview-btn" onclick="changeNewImage()">
+                            <i class="fas fa-sync-alt"></i> Change
+                        </button>
+                        <button type="button" class="preview-btn" onclick="removeNewImage()">
+                            <i class="fas fa-trash"></i> Remove
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Content -->
+            <div class="form-group">
+                <label for="content">Blog Content <span class="required">*</span></label>
+                <div class="content-editor">
+                    <!-- Simple Editor Tools -->
+                    <div class="editor-tools">
+                        <button type="button" class="tool-btn" onclick="formatText('bold')">
+                            <i class="fas fa-bold"></i> Bold
+                        </button>
+                        <button type="button" class="tool-btn" onclick="formatText('italic')">
+                            <i class="fas fa-italic"></i> Italic
+                        </button>
+                        <button type="button" class="tool-btn" onclick="insertHeading()">
+                            <i class="fas fa-heading"></i> Heading
+                        </button>
+                        <button type="button" class="tool-btn" onclick="insertLink()">
+                            <i class="fas fa-link"></i> Link
+                        </button>
+                        <button type="button" class="tool-btn" onclick="insertList('ul')">
+                            <i class="fas fa-list-ul"></i> List
+                        </button>
+                    </div>
+                    
+                    <textarea id="content" 
+                              name="content" 
+                              required
+                              placeholder="Start writing your amazing content here..."
+                              oninput="updateCharCount()">{{ blog.content }}</textarea>
+                    
+                    <div class="char-counter" id="content-counter">
+                        <span id="char-count">{{ blog.content|length }}</span>/5000 characters
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Stats (Read-only) -->
+            <div class="form-group">
+                <label>Blog Statistics</label>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 10px;">
+                    <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #ff7e5f;">{{ blog.views_formatted }}</div>
+                        <div style="font-size: 0.85rem; color: #666;">Views</div>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #28a745;">{{ blog.likes_formatted }}</div>
+                        <div style="font-size: 0.85rem; color: #666;">Likes</div>
+                    </div>
+                    <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #dc3545;">{{ blog.dislikes_formatted }}</div>
+                        <div style="font-size: 0.85rem; color: #666;">Dislikes</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <!-- This button shows the confirmation card -->
+                <button type="button" class="update-btn" name="action" value="update"
+                        onclick="showUpdateCard('{{ blog.id }}', '{{ blog.title|escapejs }}')">
+                    <i class="fas fa-save"></i> Update Blog
+                </button>
+                
+                <!-- Cancel button - just a link -->
+                <a href="{% url 'profile' %}" class="cancel-btn">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+
+        </form>
+
+<!-- Update Confirmation Card -->
+<div id="updateConfirmCard" class="update-confirm-card" style="display: none;">
+    <div class="update-card-content">
+        <div class="update-icon">
+            <i class="fas fa-pen-fancy"></i>
+        </div>
+        <h3 class="update-title">Update Blog Post?</h3>
+        <p class="update-message" id="updateBlogTitle">
+            Are you sure you want to update "<strong>Blog Title Here</strong>"?
+        </p>
+        <div class="update-info">
+            <div class="info-row">
+                <i class="fas fa-clock"></i>
+                <span>Last updated: <span id="lastUpdatedTime">Just now</span></span>
+            </div>
+            <div class="info-row">
+                <i class="fas fa-history"></i>
+                <span>Previous version will be replaced</span>
+            </div>
+            <div class="info-row">
+                <i class="fas fa-eye"></i>
+                <span>Changes will be visible immediately</span>
+            </div>
+            <div class="info-row warning-row">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Make sure you've reviewed all changes</span>
+            </div>
+        </div>
+        
+        <!-- Hidden form to submit update request - Add enctype for file upload -->
+        <form id="updateBlogForm" method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Hidden inputs for text data -->
+            <input type="hidden" id="hidden_title" name="title" value="">
+            <input type="hidden" id="hidden_content" name="content" value="">
+            <input type="hidden" id="hidden_content_type" name="content_type" value="">
+            <input type="hidden" id="hidden_keep_image" name="keep_image" value="on">
+            <input type="hidden" name="action" value="update">
+            
+            <!-- We'll need to handle the file input separately -->
+            
+            <div class="update-actions">
+                <button type="button" class="cancel-update-btn" onclick="hideUpdateCard()">
+                    <i class="fas fa-times"></i> Continue Editing
+                </button>
+                <button type="submit" class="confirm-update-btn">
+                    <i class="fas fa-save"></i> Yes, Update
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/edit_blog.js' %}"></script>
+{% endblock %}

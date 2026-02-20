@@ -1,0 +1,337 @@
+{% extends '../page_base.html' %}
+{% load static %}
+
+{% block title %}Home - The Sync Point{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/home.css' %}">
+{% endblock %}
+
+{% block main %}
+<main style="height: auto;">
+
+    <!-- Spotlight blogs -->
+    <section class="spotlight" style="background-image: url('{{posts.0.image.url}}');">
+        <div class="overlay"></div>
+        <!-- Slider Container -->
+        <div class="carousel-container">
+            <div class="carousel-wrapper">
+                
+                {% for post in spotlight %}
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <div class="image-container">
+                                <img src="{{post.image.url}}" alt="{{post.title}}">
+                            </div>
+                            <div class="info-container">
+                                <h2 class="slide-title">{{post.title}}</h2>
+                                <p class="slide-author">By: {{post.author}}</p>
+                                <p class="slide-content-text">{{post.content|truncatechars:150}}</p>
+                                <p class="slide-created">Updated at: {{post.created_at}}</p>
+                                <a href="{% url 'blog_detail' post.id %}" style="text-decoration: none; display: inline-block;">
+                                    <button class="view-btn">
+                                        <i class="fa fa-eye"></i> View Post
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>        
+    </section> 
+
+    <!-- Editors's Picks Blogs -->
+     <section class="blogs">
+        <div class="blogs-head">
+            <h2>Editor's Picks</h2>
+            <div class="left-right">
+                <i class="fa fa-arrow-left" id="editor-prev"></i>
+                <i class="fa fa-arrow-right" id="editor-next"></i>
+            </div>
+        </div>
+        <div class="blogs-posts-container">
+            <div class="blog-posts" id="blog-posts">
+                {% for post in editors_choice %}
+                <article class="blog-card">
+                    <!-- Category Badge -->
+                    <div class="blog-category">
+                        <span>{{ post.get_content_type_display }}</span>
+                    </div>
+                    
+                    <!-- Blog Image -->
+                    <div class="blog-image">
+                        <img src="{% if post.image %}{{ post.image.url }}{% endif %}" 
+                            alt="{{ post.title }}">
+                    </div>
+                    
+                    <!-- Blog Content -->
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">{{ post.created_at|date:"M d, Y" }}</span>
+                            <span class="blog-author">by {{ post.author }}</span>
+                        </div>
+                        
+                        <h3 class="blog-title">
+                            <a href="{% url 'blog_detail' post.id %}">{{ post.title|truncatechars:60 }}</a>
+                        </h3>
+                        
+                        <p class="blog-excerpt">{{ post.content|truncatechars:120 }}</p>
+                        
+                        <a href="{% url 'blog_detail' post.id %}" class="read-more">
+                            Read Article
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+                {% empty %}
+                    <!-- Fallback content if no posts are available -->
+                    <div class="no-posts">
+                        <p>No editor's picks available at the moment. Check back soon!</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+     </section>
+
+    <!-- Featured Blogs -->
+     <section class="blogs">
+        <div class="blogs-head">
+            <h2>Featured</h2>
+            <div class="left-right">
+                <i class="fa fa-arrow-left" id="featured-prev"></i>
+                <i class="fa fa-arrow-right" id="featured-next"></i>
+            </div>
+        </div>
+        <div class="blogs-posts-container">
+            <div class="blog-posts" id="blog-posts-featured">
+                {% for post in featured %}
+                    <article class="blog-card">
+                        <!-- Category Badge -->
+                        <div class="blog-category">
+                            <span>{{ post.get_content_type_display }}</span>
+                        </div>
+                        
+                        <!-- Blog Image -->
+                        <div class="blog-image">
+                            <img src="{% if post.image %}{{ post.image.url }}{% endif %}" 
+                                alt="{{ post.title }}">
+                        </div>
+                        
+                        <!-- Blog Content -->
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-date">{{ post.created_at|date:"M d, Y" }}</span>
+                                <span class="blog-author">by {{ post.author }}</span>
+                            </div>
+                            
+                            <h3 class="blog-title">
+                                <a href="{% url 'blog_detail' post.id %}">{{ post.title|truncatechars:60 }}</a>
+                            </h3>
+                            
+                            <p class="blog-excerpt">{{ post.content|truncatechars:120 }}</p>
+                            
+                            <a href="{% url 'blog_detail' post.id %}" class="read-more">
+                                Read Article
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </article>
+                {% empty %}
+                    <!-- Fallback content if no posts are available -->
+                    <div class="no-posts">
+                        <p>No Featured posts available at the moment. Check back soon!</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+     </section>
+
+    <!-- Recent Posts Grid -->
+    <section class="recent-posts">
+        <div class="section-heading">
+            <h2>Recent Posts</h2>
+            <p>Explore our latest articles and updates</p>
+        </div>
+        
+        <div class="posts-grid" id="recent-posts-grid">
+            {% for post in posts|slice:"0:16" %}  
+                <div class="post-item" data-post-id="{{post.id}}">
+                    <img src="{{post.image.url}}" alt="{{post.title}}" class="post-image" loading="lazy">
+                    <div class="post-overlay">
+                        <div class="overlay-content">
+                            <div class="overlay-icon">
+                                <i class="fa fa-eye"></i>
+                            </div>
+                            <div class="overlay-text">
+                                <a href="{% url 'blog_detail' post.id %}" 
+                                    style="text-decoration: none;">
+                                    View Post
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                {% if posts|length < 4 %}
+                    <!-- Show message if there aren't enough posts -->
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #666;">
+                        <p>More posts coming soon! Check back later for updates.</p>
+                    </div>
+                {% endif %}    
+            {% endfor %}
+        </div>
+        
+        <div class="view-more-container">
+            <a href="{% url 'blogs' %}" style="text-decoration: none; display: inline;">
+                <button class="view-more-btn" id="view-more-posts">
+                    View All Posts <i class="fa fa-arrow-right"></i>
+                </button>
+            </a>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="container">
+            <div class="story-content">
+                <h1 class="story-heading">Our Story</h1>
+                
+                <div class="story-content-wrapper">
+                    <!-- Text content side -->
+                    <div class="story-content-side">
+                        <p class="story-intro">
+                            Founded in 2020, <strong>Story Platform</strong> began as a passionate endeavor to create a 
+                            space where authentic voices could be heard and meaningful stories could be shared.<br/><br/>
+                            Today, we've grown into a vibrant community of writers, thinkers, and readers who believe 
+                            in the power of words to inspire, educate, and connect people across the globe.
+                        </p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fa fa-pen-fancy"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Quality Content</h4>
+                                    <p>Carefully curated articles from verified authors</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fa fa-users"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Community Driven</h4>
+                                    <p>Join discussions and connect with like-minded readers</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fa fa-newspaper"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Daily Updates</h4>
+                                    <p>Fresh content published regularly across categories</p>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fa fa-mobile-alt"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h4>Mobile Friendly</h4>
+                                    <p>Read anytime, anywhere on any device</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="story-stats">
+                            <div class="stat-item">
+                                <span class="stat-number" style="font-size: 1.5rem;">500+</span>
+                                <span class="stat-label">Published Articles</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" style="font-size: 1.5rem;">200+</span>
+                                <span class="stat-label">Featured Authors</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" style="font-size: 1.5rem;">50K+</span>
+                                <span class="stat-label">Active Readers</span>
+                            </div>
+                        </div>
+                        
+                        <div class="about-buttons">
+                            <a href="#" class="about-btn">
+                                <i class="fa fa-book-reader"></i> Explore Our Stories
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Image side - positioned to the right on desktop -->
+                    <div class="story-image-side">
+                        <img src="{% static 'images/building.jpg' %}" alt="Story Platform - Blog Community">
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pop-Up Promo Card -->
+    <div id="promoModal" class="promo-modal" style="display: none;">
+        <div class="promo-modal-overlay"></div>
+        <div class="promo-modal-content">
+            <span class="promo-modal-close">&times;</span>
+            
+            <div class="promo-card">
+                <div class="promo-icon">
+                    <i class="fas fa-feather-alt"></i>
+                </div>
+                
+                <h1 class="promo-title">Join Our Writing Community</h1>
+                <p class="promo-subtitle">Share your thoughts, inspire others, and connect with like-minded writers</p>
+                
+                <div class="features-box">
+                    <div class="feature">
+                        <i class="fas fa-pen-fancy"></i>
+                        <h4>Write Blogs</h4>
+                        <p>Express your creativity and share your unique perspective with the world</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <i class="fas fa-book-reader"></i>
+                        <h4>Enjoy Blogs</h4>
+                        <p>Discover amazing content from talented writers across various topics</p>
+                    </div>
+                </div>
+                
+                <div class="highlight-text">
+                    ✨ Start your writing journey today - It's completely free! ✨
+                </div>
+                
+                <a href="{% url 'signup' %}" style="text-decoration: none; display: inline;">
+                    <button class="btn-primary">
+                        <i class="fas fa-user-plus"></i> Create Free Account
+                    </button>
+                </a>
+                
+                <p class="login-link">
+                    Already have an account? 
+                    <a href="{% url 'login' %}">Sign In</a>
+                </p>
+                
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

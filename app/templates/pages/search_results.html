@@ -1,0 +1,125 @@
+{% extends '../page_base.html' %}
+{% load static %}
+
+{% block title %}Search Results - The Sync Point{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/search_results.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="search-results-container">
+    <!-- Search Header -->
+    <div class="search-header">
+        <h1>Search Results</h1>
+        <p>
+            {% if query %}
+                Showing results for: <span class="search-query">"{{ query }}"</span>
+            {% else %}
+                Enter a search term to find articles
+            {% endif %}
+        </p>
+        
+        <div class="results-count">
+            Found <span class="count">{{ page_obj.paginator.count }}</span> result{{ page_obj.paginator.count|pluralize }}
+        </div>
+    </div>
+
+    <!-- Results Grid -->
+    {% if page_obj %}
+    <div class="results-grid">
+        {% for blog in page_obj %}
+        <div class="result-card">
+            <!-- Blog Image -->
+            <div class="card-image">
+                <img src="{% if blog.image %}{{ blog.image.url }}{% else %}{% static 'images/default-blog.jpg' %}{% endif %}" 
+                     alt="{{ blog.title }}">
+                <div class="card-category">{{ blog.get_content_type_display }}</div>
+            </div>
+            
+            <!-- Blog Content -->
+            <div class="card-content">
+                <h3 class="card-title">
+                    <a href="{% url 'blog_detail' blog.id %}">{{ blog.title|truncatechars:60 }}</a>
+                </h3>
+                
+                <div class="card-author">
+                    <i class="fas fa-user"></i>
+                    <span>{{ blog.author }}</span>
+                </div>
+                
+                <div class="card-date">
+                    <i class="fas fa-calendar"></i>
+                    {{ blog.created_at|date:"M d, Y" }}
+                </div>
+                
+                <a href="{% url 'blog_detail' blog.id %}" class="card-btn">
+                    <i class="fas fa-eye"></i> View Blog
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <div class="pagination-container">
+        <div class="pagination">
+            <!-- Previous Button -->
+            {% if page_obj.has_previous %}
+            <a href="?q={{ query }}&page={{ page_obj.previous_page_number }}" class="pagination-btn prev-btn">
+                <i class="fas fa-chevron-left"></i> Prev
+            </a>
+            {% else %}
+            <span class="pagination-btn prev-btn disabled">
+                <i class="fas fa-chevron-left"></i> Prev
+            </span>
+            {% endif %}
+            
+            <!-- Page Numbers -->
+            <div class="page-numbers">
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <span class="page-number current">{{ num }}</span>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?q={{ query }}&page={{ num }}" class="page-number">{{ num }}</a>
+                    {% elif num == 1 %}
+                    <a href="?q={{ query }}&page={{ num }}" class="page-number">{{ num }}</a>
+                    {% if page_obj.number > 4 %}
+                    <span class="page-dots">...</span>
+                    {% endif %}
+                    {% elif num == page_obj.paginator.num_pages %}
+                    {% if page_obj.number < page_obj.paginator.num_pages|add:'-3' %}
+                    <span class="page-dots">...</span>
+                    {% endif %}
+                    <a href="?q={{ query }}&page={{ num }}" class="page-number">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            
+            <!-- Next Button -->
+            {% if page_obj.has_next %}
+            <a href="?q={{ query }}&page={{ page_obj.next_page_number }}" class="pagination-btn next-btn">
+                Next <i class="fas fa-chevron-right"></i>
+            </a>
+            {% else %}
+            <span class="pagination-btn next-btn disabled">
+                Next <i class="fas fa-chevron-right"></i>
+            </span>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <!-- No Results -->
+    <div class="no-results">
+        <h3>No Results Found</h3>
+        <p>We couldn't find any articles matching your search. Try different keywords or browse our categories.</p>
+        <a href="{% url 'blogs' %}" class="search-again-btn">
+            <i class="fas fa-search"></i> Browse All Articles
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

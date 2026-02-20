@@ -1,0 +1,108 @@
+{% extends '../page_base.html' %}
+{% load static %}
+
+{% block title %}Contact - The Sync Point{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/contact.css' %}">
+{% endblock %}
+
+{% block main %}
+<main style="height: auto;">
+
+    <!-- Success Popup -->
+    <div id="successPopupContact" class="popup-overlay">
+        <div class="popup-content">
+            <div id='upper-side'>
+                <svg version="1.1" id="checkmark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" xml:space="preserve">
+                    <path d="M131.583,92.152l-0.026-0.041c-0.713-1.118-2.197-1.447-3.316-0.734l-31.782,20.257l-4.74-12.65
+                c-0.483-1.29-1.882-1.958-3.124-1.493l-0.045,0.017c-1.242,0.465-1.857,1.888-1.374,3.178l5.763,15.382
+                c0.131,0.351,0.334,0.65,0.579,0.898c0.028,0.029,0.06,0.052,0.089,0.08c0.08,0.073,0.159,0.147,0.246,0.209
+                c0.071,0.051,0.147,0.091,0.222,0.133c0.058,0.033,0.115,0.069,0.175,0.097c0.081,0.037,0.165,0.063,0.249,0.091
+                c0.065,0.022,0.128,0.047,0.195,0.063c0.079,0.019,0.159,0.026,0.239,0.037c0.074,0.01,0.147,0.024,0.221,0.027
+                c0.097,0.004,0.194-0.006,0.292-0.014c0.055-0.005,0.109-0.003,0.163-0.012c0.323-0.048,0.641-0.16,0.933-0.346l34.305-21.865
+                C131.967,94.755,132.296,93.271,131.583,92.152z" />
+                    <circle fill="none" stroke="#ffffff" stroke-width="5" stroke-miterlimit="10" cx="109.486" cy="104.353" r="32.53" />
+                </svg>
+                <h3 id='status'>Success</h3>
+            </div>
+            <div id='lower-side'>
+                <p id='message'>Your message has been sent!</p>
+                <button id="successCloseBtnContact" class="popup-close-btn">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Failure Popup -->
+    <div id="failurePopupContact" class="popup-overlay">
+        <div class="popup-content">
+            <div id='upper-side-failure'>
+                <svg version="1.1" id="cross" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" xml:space="preserve">
+                    <circle fill="none" stroke="#ffffff" stroke-width="5" stroke-miterlimit="10" cx="109.486" cy="104.353" r="32.53" />
+                    <line stroke="#ffffff" stroke-width="8" stroke-linecap="round" x1="85" y1="80" x2="134" y2="129" />
+                    <line stroke="#ffffff" stroke-width="8" stroke-linecap="round" x1="134" y1="80" x2="85" y2="129" />
+                </svg>
+                <h3 id='status-failure'>Failure</h3>
+            </div>
+            <div id='lower-side-failure'>
+                <p id='message-failure'>There was an error. Try again after some time.</p>
+                <button id="failureCloseBtnContact" class="popup-close-btn">Try Again</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="contact_us_6" style="background-color: rgba(15, 14, 14, 0.281);">
+        <div class="responsive-container-block container">
+            <form class="form-box" method="POST" action="{% url 'contact' %}">
+                <div class="form-container-wrapper">
+                    {% csrf_token %}  
+                    <div class="container-block form-wrapper">
+                        <div class="mob-text">
+                            <p class="text-blk contactus-head">Message Us</p>
+                        </div>
+                        <div class="responsive-container-block" id="i2cbk">
+                            <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="i10mt-3">
+                                <p class="text-blk input-title">NAME</p>
+                                <input class="input" id="ijowk-3" name="name" placeholder="Please enter first name..." required>
+                            </div>
+                            <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="ip1yp">
+                                <p class="text-blk input-title">EMAIL</p>
+                                <input class="input" id="ipmgh-3" name="email" placeholder="Please enter email..." type="email" required>
+                            </div>
+                            <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="ih9wi">
+                                <p class="text-blk input-title">PHONE NUMBER</p>
+                                <input class="input" id="imgis-3" name="pnumber" placeholder="Please enter phone number...">
+                            </div>
+                            <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="i634i-3">
+                                <p class="text-blk input-title">WRITE WHAT U WANNA SAY?</p>
+                                <textarea class="textinput" id="i5vyy-3" name="message" placeholder="Please enter query..." required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn" id="w-c-s-bgc_p-1-dm-id-2">Submit</button>
+                    </div>
+                    <div class="side-box"></div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/contact.js' %}"></script>
+{% if success %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        showSuccessPopupContact();
+    });
+</script>
+{% endif %}
+{% if error %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        showFailurePopupContact();
+    });
+</script>
+{% endif %}
+{% endblock %}

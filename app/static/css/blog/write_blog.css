@@ -1,0 +1,42 @@
+/* Write Blog Page Specific Styles */
+
+/* Gradient Header */
+.blog-page-header h1 {
+  background: linear-gradient(to right, #1a1a2e, #16213e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Action Buttons Specific to Write Page */
+.publish-btn {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  color: white;
+  box-shadow: 0 5px 15px rgba(255, 126, 95, 0.3);
+}
+
+.publish-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 126, 95, 0.4);
+}
+
+.draft-btn {
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #e0e0e0;
+}
+
+.draft-btn:hover {
+  background: #e9ecef;
+  transform: translateY(-2px);
+}
+
+.cancel-btn {
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #e0e0e0;
+}
+
+.cancel-btn:hover {
+  background: #e9ecef;
+  transform: translateY(-2px);
+}

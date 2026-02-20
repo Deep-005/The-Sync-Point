@@ -1,0 +1,66 @@
+{% extends 'auth_base.html' %}
+{% load static %}
+
+{% block title %}Sign Up - The Sync Point{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth/signup.css' %}">
+{% endblock %}
+
+{% block container_class %}sign-up-mode{% endblock %}
+
+{% block forms_content %}
+<form action="{% url 'signup' %}" class="auth-form sign-up-form active" method="post">
+  {% csrf_token %}
+  <h2 class="auth-title">Sign up</h2>
+  <div class="input-field">
+    <i class="fas fa-user"></i>
+    <input type="text" placeholder="Username" name="username" required />
+  </div>
+  <div class="input-field">
+    <i class="fas fa-envelope"></i>
+    <input type="email" placeholder="Email" name="email" required />
+  </div>
+  <div class="input-field">
+    <i class="fas fa-lock"></i>
+    <input type="password" placeholder="Password" name="password1" required />
+  </div>
+  <div class="input-field">
+    <i class="fas fa-lock"></i>
+    <input type="password" placeholder="Confirm Password" name="password2" required />
+  </div>
+
+ <button type="submit" class="auth-btn">Sign Up</button>
+
+  <p class="social-text">Or Sign up with social platforms</p>
+  <div class="social-media">
+    <a href="#" class="social-icon">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="#" class="social-icon">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="#" class="social-icon">
+      <i class="fab fa-google"></i>
+    </a>
+    <a href="#" class="social-icon">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+  </div>
+</form>
+{% endblock %}
+
+{% block panels_content %}
+<div class="panel right-panel">
+  <div class="content">
+    <h3>Already have an account?</h3>
+    <p>
+      Welcome back! Sign in to access your account and continue your journey.
+    </p>
+    <a href="{% url 'login' %}" class="auth-btn-link">
+      Sign in
+    </a>
+  </div>
+  <img src="{% static 'images/register.svg' %}" class="panel-image" alt="Register" />
+</div>
+{% endblock %}

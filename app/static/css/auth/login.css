@@ -1,0 +1,37 @@
+/* Login Page Specific Styles */
+.login-mode .signin-signup {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.login-mode .left-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.login-mode .right-panel {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(100%);
+  pointer-events: none;
+}
+
+/* Mobile Responsive for Login */
+@media (max-width: 992px) {
+  .login-mode .signin-signup {
+    margin: 0 auto;
+  }
+  
+  .login-mode .left-panel,
+  .login-mode .right-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+  
+  .login-mode .right-panel {
+    display: none;
+  }
+}

@@ -1,0 +1,58 @@
+{% extends 'auth_base.html' %}
+{% load static %}
+
+{% block title %}Login - The Sync Point{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth/login.css' %}">
+{% endblock %}
+
+{% block container_class %}login-mode{% endblock %}
+
+{% block forms_content %}
+<form action="{% url 'login' %}" class="auth-form sign-in-form active" method="post">
+  {% csrf_token %}
+  <h2 class="auth-title">Sign in</h2>
+  <div class="input-field">
+    <i class="fas fa-user"></i>
+    <input type="text" placeholder="Username" name="username" required />
+  </div>
+  <div class="input-field">
+    <i class="fas fa-lock"></i>
+    <input type="password" placeholder="Password" name="password" required />
+  </div>
+
+ <button type="submit" class="auth-btn solid">Log in</button>
+
+  <p class="social-text">Or Sign in with social platforms</p>
+  <div class="social-media">
+    <a href="#" class="social-icon">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="#" class="social-icon">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="#" class="social-icon">
+      <i class="fab fa-google"></i>
+    </a>
+    <a href="#" class="social-icon">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+  </div>
+</form>
+{% endblock %}
+
+{% block panels_content %}
+<div class="panel left-panel">
+  <div class="content">
+    <h3>New here?</h3>
+    <p>
+      Don't have an account yet? Create one and join our community today!
+    </p>
+    <a href="{% url 'signup' %}" class="auth-btn-link">
+      Sign up
+    </a>
+  </div>
+  <img src="{% static 'images/log.svg' %}" class="panel-image" alt="Login" />
+</div>
+{% endblock %}

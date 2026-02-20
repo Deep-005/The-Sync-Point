@@ -1,0 +1,133 @@
+{% extends '../page_base.html' %}
+{% load static %}
+
+{% block title %}About - The Sync Point{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/about.css' %}">
+{% endblock %}
+
+{% block main %}
+<!-- Hero Section -->
+<section class="about-hero">
+    <div class="about-hero-container">
+        <h1>About The Sync Point</h1>
+        <p>Where ideas converge and perspectives connect. We're passionate about sharing knowledge that matters.</p>
+    </div>
+</section>
+
+<!-- Main Content -->
+<div class="about-content">
+    <!-- Mission Section -->
+    <section class="about-section">
+        <div class="about-text">
+            <h2>Our Mission</h2>
+            <p>At The Sync Point, we believe in the power of connected ideas. Our mission is to bridge gaps between different domains of knowledge, making complex topics accessible and engaging for everyone.</p>
+            <p>We curate content that matters, from technology trends to lifestyle insights, ensuring our readers always find something valuable.</p>
+        </div>
+        <div class="about-image">
+            <img src="{% static 'images/about-2.jpg' %}" alt="Our Mission">
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="about-section">
+        <div class="about-image">
+            <img src="{% static 'images/about-1.jpg' %}" alt="Our Story">
+        </div>
+        <div class="about-text">
+            <h2>Our Story</h2>
+            <p>Founded in 2023, The Sync Point started as a small passion project among friends who wanted to share their diverse interests. Today, we've grown into a platform reaching thousands of readers monthly.</p>
+            <p>What began with three categories has expanded to nine, each representing a unique facet of modern life we're excited to explore and share with our community.</p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Articles Published</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">50K+</div>
+            <div class="stat-label">Monthly Readers</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">9</div>
+            <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">15+</div>
+            <div class="stat-label">Contributors</div>
+        </div>
+    </div>
+
+    <!-- Team Section (Optional) -->
+    <section class="team-section">
+        <h2>Meet Our Core Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="{% static 'images/about-4.jpg' %}" alt="Alex Johnson">
+                <h3>Alexa Johnson</h3>
+                <p>Editor-in-Chief</p>
+            </div>
+            <div class="team-member">
+                <img src="{% static 'images/about-5.jpg' %}" alt="Sarah Chen">
+                <h3>Sarah Chen</h3>
+                <p>Content Director</p>
+            </div>
+            <div class="team-member">
+                <img src="{% static 'images/about-6.jpg' %}" alt="Marcus Lee">
+                <h3>Marcus Lee</h3>
+                <p>Tech Editor</p>
+            </div>
+            <div class="team-member">
+                <img src="{% static 'images/about-7.avif' %}" alt="Rob Davis">
+                <h3>Rob Davis</h3>
+                <p>Marketing</p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Simple counter animation for stats
+    document.addEventListener('DOMContentLoaded', function() {
+        const statNumbers = document.querySelectorAll('.stat-number');
+        
+        const animateValue = (element, start, end, duration) => {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value + (element.textContent.includes('+') ? '+' : '');
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        };
+        
+        // Animate stats when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const element = entry.target;
+                    const value = parseInt(element.textContent);
+                    if (!isNaN(value)) {
+                        animateValue(element, 0, value, 2000);
+                    }
+                    observer.unobserve(element);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        statNumbers.forEach(stat => {
+            observer.observe(stat);
+        });
+    });
+</script>
+{% endblock %}

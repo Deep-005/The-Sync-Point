@@ -1,0 +1,38 @@
+/* Signup Page Specific Styles */
+.sign-up-mode .signin-signup {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.sign-up-mode .right-panel {
+  margin-left: 50%;
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.sign-up-mode .left-panel {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-100%);
+  pointer-events: none;
+}
+
+/* Mobile Responsive for Signup */
+@media (max-width: 992px) {
+  .sign-up-mode .signin-signup {
+    margin: 0 auto;
+  }
+  
+  .sign-up-mode .right-panel,
+  .sign-up-mode .left-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+  
+  .sign-up-mode .left-panel {
+    display: none;
+  }
+}
