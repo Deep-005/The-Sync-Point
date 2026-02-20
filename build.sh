@@ -23,15 +23,15 @@ python manage.py migrate
 echo "📝 Creating dummy blogs..."
 python manage.py add_dummy_blogs --noinput
 
-# ===== NEW: Auto-attach images to blogs =====
+# ===== Auto-attach images to blogs =====
 echo "📸 Auto-attaching images to blogs..."
 python -c "
 import os
 import sys
 import django
 
-# Setup Django
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Setup Django - use current directory instead of __file__
+sys.path.append(os.getcwd())
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blogs.settings')
 django.setup()
 
@@ -52,15 +52,21 @@ def attach_images():
     
     print(f'📊 Found {total} blogs without images')
     
-    # Path to images
+    # Path to images - use absolute path
     images_path = os.path.join(settings.BASE_DIR, 'static', 'dummy_blogs_images')
     
     if not os.path.exists(images_path):
         print(f'❌ Images folder not found at: {images_path}')
-        print('Contents of static/:', os.listdir(os.path.join(settings.BASE_DIR, 'static')) if os.path.exists(os.path.join(settings.BASE_DIR, 'static')) else 'static folder missing')
+        # List what's in static folder for debugging
+        static_path = os.path.join(settings.BASE_DIR, 'static')
+        if os.path.exists(static_path):
+            print(f'Contents of static/: {os.listdir(static_path)}')
+        else:
+            print('static folder missing!')
         return
     
     print(f'📁 Images folder found with {len(os.listdir(images_path))} files')
+    print(f'Sample images: {os.listdir(images_path)[:5]}')
     
     # Map categories to filename patterns
     category_map = {
@@ -80,6 +86,7 @@ def attach_images():
         category = blog.content_type
         base_name = category_map.get(category, 'default')
         
+        image_attached = False
         for i in range(1, 6):
             for ext in ['.jpg', '.jpeg', '.png']:
                 image_filename = f'{base_name}-{i}{ext}'
@@ -92,19 +99,19 @@ def attach_images():
                             blog.image.save(new_filename, File(f), save=True)
                             print(f'  ✅ Attached: {image_filename} to blog {blog.id}')
                             attached += 1
+                            image_attached = True
                             break
                     except Exception as e:
-                        print(f'  ❌ Error: {e}')
-            if blog.image:
-                continue
+                        print(f'  ❌ Error attaching {image_filename}: {e}')
+            if image_attached:
+                break
         
-        if not blog.image:
-            print(f'  ⚠️ No image found for {category} blog {blog.id}')
+        if not image_attached:
+            print(f'  ⚠️ No image found for {category} blog {blog.id} (tried {base_name}-1.jpg through {base_name}-5.jpg)')
     
-    print(f'\n📋 SUMMARY: Attached images to {attached} blogs')
+    print(f'\n📋 SUMMARY: Attached images to {attached} out of {total} blogs')
 
-if __name__ == '__main__':
-    attach_images()
+attach_images()
 "
 
 echo "📋 Final check:"
