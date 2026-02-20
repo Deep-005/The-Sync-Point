@@ -35,7 +35,7 @@ sys.path.append(os.getcwd())
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blogs.settings')
 django.setup()
 
-from blog.models import BlogPost
+from app.models import BlogPost
 from django.core.files import File
 from django.conf import settings
 
