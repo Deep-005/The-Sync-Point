@@ -30,7 +30,6 @@ import os
 import sys
 import django
 
-# Setup Django - use current directory instead of __file__
 sys.path.append(os.getcwd())
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blogs.settings')
 django.setup()
@@ -119,7 +118,7 @@ python -c "
 import os, django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blogs.settings')
 django.setup()
-from blog.models import BlogPost
+from app.models import BlogPost
 total = BlogPost.objects.count()
 with_images = BlogPost.objects.exclude(image='').count()
 print(f'   Total blogs: {total}')
