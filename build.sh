@@ -30,87 +30,122 @@ import os
 import sys
 import django
 
+print('='*50)
+print('DEBUGGING INFORMATION')
+print('='*50)
+
+print(f'Current directory: {os.getcwd()}')
+print(f'Python path: {sys.path}')
+
+# Setup Django
 sys.path.append(os.getcwd())
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blogs.settings')
 django.setup()
+print('✅ Django setup complete')
 
-from app.models import BlogPost
+# Check if we can import the model
+try:
+    from app.models import BlogPost
+    print('✅ Successfully imported BlogPost from app.models')
+except Exception as e:
+    print(f'❌ Failed to import BlogPost: {e}')
+
 from django.core.files import File
 from django.conf import settings
 
-def attach_images():
-    print('🔍 Looking for blogs without images...')
-    
-    # Find blogs without images
-    blogs = BlogPost.objects.filter(image='')
-    total = blogs.count()
-    
-    if total == 0:
-        print('✅ All blogs already have images!')
-        return
-    
-    print(f'📊 Found {total} blogs without images')
-    
-    # Path to images - use absolute path
-    images_path = os.path.join(settings.BASE_DIR, 'static', 'dummy_blogs_images')
-    
-    if not os.path.exists(images_path):
-        print(f'❌ Images folder not found at: {images_path}')
-        # List what's in static folder for debugging
-        static_path = os.path.join(settings.BASE_DIR, 'static')
-        if os.path.exists(static_path):
-            print(f'Contents of static/: {os.listdir(static_path)}')
-        else:
-            print('static folder missing!')
-        return
-    
-    print(f'📁 Images folder found with {len(os.listdir(images_path))} files')
-    print(f'Sample images: {os.listdir(images_path)[:5]}')
-    
-    # Map categories to filename patterns
-    category_map = {
-        'Business': 'business',
-        'Travel': 'travel',
-        'Sports': 'sports',
-        'Food': 'food',
-        'Fashion': 'fashion',
-        'Technology': 'tech',
-        'Creative': 'creative',
-        'Health': 'health',
-        'Entertainment': 'ent',
-    }
-    
-    attached = 0
-    for blog in blogs:
-        category = blog.content_type
-        base_name = category_map.get(category, 'default')
-        
-        image_attached = False
-        for i in range(1, 6):
-            for ext in ['.jpg', '.jpeg', '.png']:
-                image_filename = f'{base_name}-{i}{ext}'
-                image_path = os.path.join(images_path, image_filename)
-                
-                if os.path.exists(image_path):
-                    try:
-                        with open(image_path, 'rb') as f:
-                            new_filename = f'{category.lower()}_{blog.id}_{image_filename}'
-                            blog.image.save(new_filename, File(f), save=True)
-                            print(f'  ✅ Attached: {image_filename} to blog {blog.id}')
-                            attached += 1
-                            image_attached = True
-                            break
-                    except Exception as e:
-                        print(f'  ❌ Error attaching {image_filename}: {e}')
-            if image_attached:
-                break
-        
-        if not image_attached:
-            print(f'  ⚠️ No image found for {category} blog {blog.id} (tried {base_name}-1.jpg through {base_name}-5.jpg)')
-    
-    print(f'\n📋 SUMMARY: Attached images to {attached} out of {total} blogs')
+print(f'BASE_DIR: {settings.BASE_DIR}')
 
-attach_images()
+# Check static folder
+static_path = os.path.join(settings.BASE_DIR, 'static')
+print(f'Static path: {static_path}')
+print(f'Static exists? {os.path.exists(static_path)}')
+
+if os.path.exists(static_path):
+    print(f'Static contents: {os.listdir(static_path)}')
+    
+    # Check images folder
+    images_path = os.path.join(static_path, 'dummy_blogs_images')
+    print(f'Images path: {images_path}')
+    print(f'Images exists? {os.path.exists(images_path)}')
+    
+    if os.path.exists(images_path):
+        print(f'Images found: {os.listdir(images_path)[:10]}')
+    else:
+        print('❌ Images folder not found!')
+        
+        # Try to find it anywhere
+        print('Searching for dummy_blogs_images folder...')
+        for root, dirs, files in os.walk(settings.BASE_DIR):
+            if 'dummy_blogs_images' in dirs:
+                print(f'Found at: {os.path.join(root, dummy_blogs_images)}')
+else:
+    print('❌ Static folder not found!')
+    # Try to find static folder
+    for root, dirs, files in os.walk(settings.BASE_DIR):
+        if 'static' in dirs:
+            print(f'Found static at: {os.path.join(root, static)}')
+
+# Now try to attach images
+try:
+    from app.models import BlogPost
+    
+    def attach_images():
+        print('\n🔍 Looking for blogs without images...')
+        
+        blogs = BlogPost.objects.filter(image='')
+        total = blogs.count()
+        print(f'📊 Found {total} blogs without images')
+        
+        if total == 0:
+            print('✅ All blogs already have images!')
+            return
+        
+        images_path = os.path.join(settings.BASE_DIR, 'static', 'dummy_blogs_images')
+        
+        if not os.path.exists(images_path):
+            print(f'❌ Images folder not found at: {images_path}')
+            return
+        
+        print(f'📁 Images folder found with {len(os.listdir(images_path))} files')
+        
+        category_map = {
+            'Business': 'business', 'Travel': 'travel', 'Sports': 'sports',
+            'Food': 'food', 'Fashion': 'fashion', 'Technology': 'tech',
+            'Creative': 'creative', 'Health': 'health', 'Entertainment': 'ent',
+        }
+        
+        attached = 0
+        for blog in blogs:
+            category = blog.content_type
+            base_name = category_map.get(category, 'default')
+            
+            for i in range(1, 6):
+                for ext in ['.jpg', '.jpeg', '.png']:
+                    image_filename = f'{base_name}-{i}{ext}'
+                    image_path = os.path.join(images_path, image_filename)
+                    
+                    if os.path.exists(image_path):
+                        try:
+                            with open(image_path, 'rb') as f:
+                                new_filename = f'{category.lower()}_{blog.id}_{image_filename}'
+                                blog.image.save(new_filename, File(f), save=True)
+                                print(f'  ✅ Attached to blog {blog.id}')
+                                attached += 1
+                                break
+                        except Exception as e:
+                            print(f'  ❌ Error: {e}')
+                    if blog.image:
+                        break
+            
+            if not blog.image:
+                print(f'  ⚠️ No image for {category} blog {blog.id}')
+        
+        print(f'\n📋 Attached images to {attached} blogs')
+    
+    attach_images()
+    
+except Exception as e:
+    print(f'❌ Error in attachment process: {e}')
 "
 
 echo "📋 Final check:"
@@ -125,5 +160,3 @@ print(f'   Total blogs: {total}')
 print(f'   Blogs with images: {with_images}')
 print(f'   Blogs without images: {total - with_images}')
 "
-
-echo "✅ Build complete!"
