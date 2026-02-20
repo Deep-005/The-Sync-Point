@@ -2,7 +2,7 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from django.core.files import File
-from blog.models import BlogPost
+from app.models import BlogPost
 from datetime import datetime, timedelta
 import os
 import random
