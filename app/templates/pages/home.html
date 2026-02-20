@@ -11,7 +11,9 @@
 <main style="height: auto;">
 
     <!-- Spotlight blogs -->
-    <section class="spotlight" style="background-image: url('{{posts.0.image.url}}');">
+    <section class="spotlight" 
+        {% if posts.0.image %}style="background-image: url('{{ posts.0.image.url }}');"
+        {% else %}style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"{% endif %}>
         <div class="overlay"></div>
         <!-- Slider Container -->
         <div class="carousel-container">
