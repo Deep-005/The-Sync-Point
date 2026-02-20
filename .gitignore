@@ -50,6 +50,9 @@ myvenv/
 /media/profile_pics/
 /media/blog_images/
 
+staticfiles/
+!static/default_blog_images/
+
 # Environment variables
 .env
 .env.local
